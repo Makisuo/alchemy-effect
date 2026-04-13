@@ -12,6 +12,7 @@
       "alchemy-effect",
       "website",
       "packages/*",
+      "services/*",
       "examples/*"
     ],
     "catalog": {
