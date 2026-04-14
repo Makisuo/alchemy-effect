@@ -9,11 +9,11 @@
   },
   "type": "module",
   "scripts": {
-    "deploy": "alchemy-effect deploy",
     "dev": "alchemy-effect dev",
-    "destroy": "alchemy-effect destroy",
     "logs": "alchemy-effect logs",
-    "tail": "alchemy-effect tail"
+    "tail": "alchemy-effect tail",
+    "deploy": "bun ../../alchemy-effect/bin/alchemy-effect.ts deploy",
+    "destroy": "bun ../../alchemy-effect/bin/alchemy-effect.ts destroy"
   },
   "dependencies": {
     "@alchemy.run/better-auth": "workspace:*",
