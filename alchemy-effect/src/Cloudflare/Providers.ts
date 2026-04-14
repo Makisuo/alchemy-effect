@@ -1,4 +1,3 @@
-import { pipe } from "effect/Function";
 import * as Auth from "@distilled.cloud/cloudflare/Auth";
 import * as Layer from "effect/Layer";
 import * as Socket from "effect/unstable/socket/Socket";
@@ -101,6 +100,3 @@ export const bindings = () =>
     R2.R2BucketBindingPolicyLive,
     KV.KVNamespaceBindingPolicyLive,
   );
-
-const utils = () =>
-  Layer.mergeAll(AssetsProvider(), Socket.layerWebSocketConstructorGlobal);
