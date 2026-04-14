@@ -81,13 +81,13 @@ export const credentials = () => Account.fromStageConfig();
  */
 export const resources = () =>
   Layer.mergeAll(
-    CommandProvider(),
+    Build.CommandProvider(),
     RandomProvider(),
-    ContainerProvider(),
-    WorkerProvider(),
-    WorkflowProvider(),
+    Containers.ContainerProvider(),
+    Workers.WorkerProvider(),
+    Workflows.WorkflowProvider(),
     D1.DatabaseProvider(),
-    KV.NamespaceProvider(),
+    KV.KVNamespaceProvider(),
     R2.R2BucketProvider(),
   );
 
