@@ -1,21 +1,33 @@
-import { Cloudflare, Stack } from "alchemy-effect";
+import * as Alchemy from "alchemy-effect";
+import * as Cloudflare from "alchemy-effect/Cloudflare";
 import * as Effect from "effect/Effect";
+import type { Counter } from "./src/worker.ts";
 
-const DB = Cloudflare.D1Database("DB");
+export const DB = Cloudflare.D1Database("DB");
 
-const Bucket = Cloudflare.R2Bucket("Bucket");
+export const Bucket = Cloudflare.R2Bucket("Bucket");
 
-const Worker = Cloudflare.Worker("Worker", {
+export type WorkerEnv = Cloudflare.InferEnv<typeof Worker>;
+
+export const Worker = Cloudflare.Worker("Worker", {
   main: "./src/worker.ts",
   bindings: {
     DB,
     Bucket,
+    Counter: Cloudflare.DurableObjectNamespace<Counter>("Counter", {
+      className: "Counter",
+    }),
   },
 });
 
-export type WorkerEnv = Cloudflare.InferEnv<typeof Worker>;
+export default Alchemy.Stack(
+  "CloudflareWorker",
+  {
+    providers: Cloudflare.providers(),
+  },
+  Effect.gen(function* () {
+    const worker = yield* Worker;
 
-export default Worker.pipe(
-  Effect.map((worker) => worker.url),
-  Stack.make("CloudflareWorker", Cloudflare.providers()),
+    return worker.url;
+  }),
 );
