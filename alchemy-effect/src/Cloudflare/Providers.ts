@@ -1,7 +1,5 @@
-import * as Auth from "@distilled.cloud/cloudflare/Auth";
 import { pipe } from "effect/Function";
 import * as Layer from "effect/Layer";
-import * as FetchHttpClient from "effect/unstable/http/FetchHttpClient";
 import * as Socket from "effect/unstable/socket/Socket";
 import { CommandProvider } from "../Build/Command.ts";
 import type { Provider } from "../Provider.ts";
@@ -35,11 +33,7 @@ export const providers = () =>
 /**
  * Cloudflare account credentials and auth context.
  */
-export const credentials = () =>
-  Layer.mergeAll(
-    Account.fromStageConfig(),
-    Layer.provideMerge(Auth.fromEnv(), FetchHttpClient.layer),
-  );
+export const credentials = () => Account.fromStageConfig();
 
 /**
  * All Cloudflare resource providers.
